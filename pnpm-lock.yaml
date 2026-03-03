@@ -10,6 +10,9 @@ importers:
             astro:
                 specifier: ^5.17.1
                 version: 5.18.0(rollup@4.59.0)(typescript@5.9.3)(yaml@2.8.2)
+            husky:
+                specifier: ^9.1.7
+                version: 9.1.7
             lint-staged:
                 specifier: ^16.3.2
                 version: 16.3.2
@@ -1743,6 +1746,14 @@ packages:
             {
                 integrity: sha512-dTxcvPXqPvXBQpq5dUr6mEMJX4oIEFv6bwom3FDwKRDsuIjjJGANqhBuoAn9c1RQJIdAKav33ED65E2ys+87QQ==,
             }
+
+    husky@9.1.7:
+        resolution:
+            {
+                integrity: sha512-5gs5ytaNjBrh5Ow3zrvdUUY+0VxIuWVL4i9irt6friV+BqdCfmV11CQTWMiBYWHbXhco+J1kHfTOUkePhCDvMA==,
+            }
+        engines: { node: ">=18" }
+        hasBin: true
 
     import-meta-resolve@4.2.0:
         resolution:
@@ -3970,6 +3981,8 @@ snapshots:
     html-void-elements@3.0.0: {}
 
     http-cache-semantics@4.2.0: {}
+
+    husky@9.1.7: {}
 
     import-meta-resolve@4.2.0: {}
 
