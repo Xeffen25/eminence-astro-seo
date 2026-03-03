@@ -29,7 +29,7 @@ The `index.ts` file is the "entry point" for your package. Export your component
 
 All commands are run from the root of the project, from a terminal:
 
-| Command       | Action                                                                                                                                                                                                                           |
-| :------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Command        | Action                                                                                                                                                                                                                            |
+| :------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `pnpm link`    | Registers this package locally. Run `pnpm link my-component-library` in an Astro project to install your components                                                                                                               |
 | `pnpm publish` | [Publishes](https://docs.npmjs.com/creating-and-publishing-unscoped-public-packages#publishing-unscoped-public-packages) this package to NPM. Requires you to be [logged in](https://docs.npmjs.com/cli/v8/commands/pnpm-adduser) |

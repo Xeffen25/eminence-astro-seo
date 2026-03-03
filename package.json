@@ -1,22 +1,32 @@
 {
-  "name": "eminence-astro-seo",
-  "version": "0.0.1",
-  "type": "module",
-  "exports": {
-    ".": "./index.ts"
-  },
-  "files": [
-    "src",
-    "index.ts"
-  ],
-  "keywords": [
-    "astro-component"
-  ],
-  "scripts": {},
-  "devDependencies": {
-    "astro": "^5.17.1"
-  },
-  "peerDependencies": {
-    "astro": "^4.0.0 || ^5.0.0"
-  }
+	"name": "eminence-astro-seo",
+	"version": "0.0.1",
+	"type": "module",
+	"exports": {
+		".": "./index.ts"
+	},
+	"files": [
+		"src",
+		"index.ts"
+	],
+	"keywords": [
+		"astro-component"
+	],
+	"scripts": {
+		"format:check": "prettier . --check",
+		"format:fix": "prettier . --write",
+		"prepare": "husky"
+	},
+	"lint-staged": {
+		"*": "prettier --check"
+	},
+	"devDependencies": {
+		"astro": "^5.17.1",
+		"lint-staged": "^16.3.2",
+		"prettier": "^3.8.1",
+		"prettier-plugin-astro": "^0.14.1"
+	},
+	"peerDependencies": {
+		"astro": "^4.0.0 || ^5.0.0"
+	}
 }
