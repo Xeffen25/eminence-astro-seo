@@ -16,21 +16,22 @@
 		"format:check": "prettier . --check",
 		"format:fix": "prettier . --write",
 		"prepare": "husky",
-		"check": "prettier . --check && astro check"
+		"check": "pnpm format:check && astro check"
 	},
 	"lint-staged": {
 		"*": "prettier --check"
 	},
 	"devDependencies": {
-		"astro": "^5.17.1",
+		"@astrojs/check": "^0.9.8",
+		"astro": "^6.0.8",
 		"husky": "^9.1.7",
-		"lint-staged": "^16.3.2",
+		"lint-staged": "^16.4.0",
 		"prettier": "^3.8.1",
 		"prettier-plugin-astro": "^0.14.1",
-		"@astrojs/check": "^0.9.6",
 		"typescript": "^5.9.3"
 	},
 	"peerDependencies": {
-		"astro": "^4.0.0 || ^5.0.0"
+		"astro": "^6.0.0",
+		"schema-dts": "^1.1.5"
 	}
 }
