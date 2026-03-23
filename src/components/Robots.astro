@@ -1,0 +1,31 @@
+---
+export type Props = {
+	noindex?: boolean;
+	nofollow?: boolean;
+	noarchive?: boolean;
+	nosnippet?: boolean;
+	indexifembedded?: boolean;
+	"max-snippet"?: number;
+	"max-image-preview"?: "none" | "standard" | "large";
+	"max-video-preview"?: number;
+	notranslate?: boolean;
+	noimageindex?: boolean;
+	unavailable_after?: string;
+};
+
+const directivesToContent = (directives: Record<string, boolean | number | string | undefined>) => {
+	return Object.entries(directives)
+		.flatMap(([directive, value]) => {
+			if (value === undefined || value === false) return [];
+
+			if (value === true) return [directive];
+
+			return [`${directive}:${value}`];
+		})
+		.join(", ");
+};
+
+const robotsContent = directivesToContent(Astro.props);
+---
+
+{robotsContent && <meta name="robots" content={robotsContent} />}

@@ -4,6 +4,7 @@ import type { ComponentProps } from "astro/types";
 import Title from "@/components/Title.astro";
 import Description from "@/components/Description.astro";
 import Base from "@/components/Base.astro";
+import Robots from "@/components/Robots.astro";
 
 export type Props = {
 	charset?: string;
@@ -11,9 +12,17 @@ export type Props = {
 	base?: ComponentProps<typeof Base>;
 	title: ComponentProps<typeof Title>;
 	description?: ComponentProps<typeof Description>;
+	robots?: ComponentProps<typeof Robots>;
 };
 
-const { charset = "utf-8", viewport = "width=device-width, initial-scale=1.0", base, title, description } = Astro.props;
+const {
+	charset = "utf-8",
+	viewport = "width=device-width, initial-scale=1.0",
+	base,
+	title,
+	description,
+	robots,
+} = Astro.props;
 ---
 
 <head>
@@ -23,4 +32,5 @@ const { charset = "utf-8", viewport = "width=device-width, initial-scale=1.0", b
 	<Title {...title} />
 	<slot />
 	{description && <Description {...description} />}
+	{robots && <Robots {...robots} />}
 </head>

@@ -2,6 +2,7 @@
 // Then, use this file to export everything you want your user to access.
 import Description from "@/components/Description.astro";
 import Head from "@/components/Head.astro";
+import Robots from "@/components/Robots.astro";
 import Title from "@/components/Title.astro";
 
-export { Description, Head, Title };
+export { Description, Head, Robots, Title };
