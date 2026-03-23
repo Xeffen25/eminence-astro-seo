@@ -8,5 +8,6 @@ import Manifest from "@/components/Manifest.astro";
 import Robots from "@/components/Robots.astro";
 import ThemeColor from "@/components/ThemeColor.astro";
 import Title from "@/components/Title.astro";
+import Verification from "@/components/Verification.astro";
 
-export { Base, ColorScheme, Description, Head, Manifest, Robots, ThemeColor, Title };
+export { Base, ColorScheme, Description, Head, Manifest, Robots, ThemeColor, Title, Verification };

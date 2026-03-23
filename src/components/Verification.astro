@@ -1,0 +1,20 @@
+---
+type VerificationEntry = {
+	name: string;
+	content: string;
+};
+
+export type Props = {
+	google?: string;
+	yandex?: string;
+	yahoo?: string;
+	other?: VerificationEntry[];
+};
+
+const { google, yandex, yahoo, other } = Astro.props;
+---
+
+{google && <meta name="google-site-verification" content={google} />}
+{yandex && <meta name="yandex-verification" content={yandex} />}
+{yahoo && <meta name="y_key" content={yahoo} />}
+{other?.map(({ name, content }) => <meta name={name} content={content} />)}
