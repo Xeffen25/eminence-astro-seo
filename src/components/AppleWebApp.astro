@@ -1,0 +1,41 @@
+---
+type StartupImage =
+	| string
+	| {
+			url: string;
+			media?: string;
+	  };
+
+export type Props = {
+	itunes?: {
+		appId: string;
+		appArgument?: string;
+	};
+	title?: string;
+	statusBarStyle?: "default" | "black" | "black-translucent";
+	startupImage?: StartupImage[];
+};
+
+const { itunes, title, statusBarStyle, startupImage } = Astro.props;
+---
+
+{
+	itunes && (
+		<meta
+			name="apple-itunes-app"
+			content={[`app-id=${itunes.appId}`, itunes.appArgument && `app-argument=${itunes.appArgument}`]
+				.filter(Boolean)
+				.join(", ")}
+		/>
+	)
+}
+<meta name="mobile-web-app-capable" content="yes" />
+{title && <meta name="apple-mobile-web-app-title" content={title} />}
+{
+	startupImage?.map((image) => {
+		const url = typeof image === "string" ? image : image.url;
+		const media = typeof image === "string" ? undefined : image.media;
+		return <link href={url} media={media} rel="apple-touch-startup-image" />;
+	})
+}
+{statusBarStyle && <meta name="apple-mobile-web-app-status-bar-style" content={statusBarStyle} />}
