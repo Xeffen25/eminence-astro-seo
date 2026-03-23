@@ -1,0 +1,25 @@
+---
+import type { ComponentProps } from "astro/types";
+
+import Title from "@/components/Title.astro";
+import Description from "@/components/Description.astro";
+
+export type Props = {
+	charset?: string;
+	viewport?: string;
+	title: ComponentProps<typeof Title>;
+	description?: ComponentProps<typeof Description>;
+};
+
+const { charset = "utf-8", viewport = "width=device-width, initial-scale=1.0", title, description } = Astro.props;
+---
+
+<head>
+	<slot name="head-start" />
+	<meta charset={charset} />
+	<meta name="viewport" content={viewport} />
+	<Title {...title} />
+	<slot />
+	{description && <Description {...description} />}
+	<slot name="head-end" />
+</head>
