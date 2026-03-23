@@ -5,14 +5,18 @@ import Title from "@/components/Title.astro";
 import Description from "@/components/Description.astro";
 import Base from "@/components/Base.astro";
 import Robots from "@/components/Robots.astro";
+import ThemeColor from "@/components/ThemeColor.astro";
+import ColorScheme from "@/components/ColorScheme.astro";
 
 export type Props = {
 	charset?: string;
 	viewport?: string;
 	base?: ComponentProps<typeof Base>;
 	title: ComponentProps<typeof Title>;
-	description?: ComponentProps<typeof Description>;
+	description?: ComponentProps<typeof Description>["value"];
 	robots?: ComponentProps<typeof Robots>;
+	themeColor?: ComponentProps<typeof ThemeColor>["value"];
+	colorScheme?: ComponentProps<typeof ColorScheme>["value"];
 };
 
 const {
@@ -22,6 +26,8 @@ const {
 	title,
 	description,
 	robots,
+	themeColor,
+	colorScheme,
 } = Astro.props;
 ---
 
@@ -31,6 +37,8 @@ const {
 	{base && <Base {...base} />}
 	<Title {...title} />
 	<slot />
-	{description && <Description {...description} />}
+	{description && <Description value={description} />}
 	{robots && <Robots {...robots} />}
+	{themeColor && <ThemeColor value={themeColor} />}
+	{colorScheme && <ColorScheme value={colorScheme} />}
 </head>

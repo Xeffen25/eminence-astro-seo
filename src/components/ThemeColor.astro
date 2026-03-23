@@ -1,0 +1,23 @@
+---
+type ThemeColorEntry = {
+	scheme: "light" | "dark";
+	/** Any valid CSS color value, e.g. `"cyan"`, `"#fff"`, `"rgb(0,0,0)"` */
+	color: string;
+};
+
+export type Props = {
+	value: string | ThemeColorEntry[];
+};
+
+const { value } = Astro.props;
+---
+
+{
+	typeof value === "string" ? (
+		<meta name="theme-color" content={value} />
+	) : (
+		value.map(({ scheme, color }) => (
+			<meta name="theme-color" media={`(prefers-color-scheme: ${scheme})`} content={color} />
+		))
+	)
+}

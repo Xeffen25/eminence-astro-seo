@@ -1,0 +1,9 @@
+---
+export type Props = {
+	value: "normal" | "light" | "dark" | "light dark" | "dark light" | "only light";
+};
+
+const { value } = Astro.props;
+---
+
+<meta name="color-scheme" content={value} />
