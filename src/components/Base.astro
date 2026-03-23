@@ -1,0 +1,10 @@
+---
+export type Props = {
+	href: string | URL;
+	target?: string;
+};
+
+const { href, target } = Astro.props;
+---
+
+<base href={typeof href === "string" ? href : href.toString()} target={target} />
