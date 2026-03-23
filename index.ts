@@ -4,8 +4,9 @@ import Base from "@/components/Base.astro";
 import ColorScheme from "@/components/ColorScheme.astro";
 import Description from "@/components/Description.astro";
 import Head from "@/components/Head.astro";
+import Manifest from "@/components/Manifest.astro";
 import Robots from "@/components/Robots.astro";
 import ThemeColor from "@/components/ThemeColor.astro";
 import Title from "@/components/Title.astro";
 
-export { Base, ColorScheme, Description, Head, Robots, ThemeColor, Title };
+export { Base, ColorScheme, Description, Head, Manifest, Robots, ThemeColor, Title };

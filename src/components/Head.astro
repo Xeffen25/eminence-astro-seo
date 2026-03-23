@@ -3,6 +3,7 @@ import type { ComponentProps } from "astro/types";
 
 import Title from "@/components/Title.astro";
 import Description from "@/components/Description.astro";
+import Manifest from "@/components/Manifest.astro";
 import Base from "@/components/Base.astro";
 import Robots from "@/components/Robots.astro";
 import ThemeColor from "@/components/ThemeColor.astro";
@@ -14,6 +15,7 @@ export type Props = {
 	base?: ComponentProps<typeof Base>;
 	title: ComponentProps<typeof Title>;
 	description?: ComponentProps<typeof Description>["value"];
+	manifest?: ComponentProps<typeof Manifest>["value"];
 	robots?: ComponentProps<typeof Robots>;
 	themeColor?: ComponentProps<typeof ThemeColor>["value"];
 	colorScheme?: ComponentProps<typeof ColorScheme>["value"];
@@ -25,6 +27,7 @@ const {
 	base,
 	title,
 	description,
+	manifest,
 	robots,
 	themeColor,
 	colorScheme,
@@ -38,6 +41,7 @@ const {
 	<Title {...title} />
 	<slot />
 	{description && <Description value={description} />}
+	{manifest && <Manifest value={manifest} />}
 	{robots && <Robots {...robots} />}
 	{themeColor && <ThemeColor value={themeColor} />}
 	{colorScheme && <ColorScheme value={colorScheme} />}
