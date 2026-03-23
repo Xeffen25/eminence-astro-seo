@@ -4,4 +4,4 @@ import Description from "@/components/Description.astro";
 import Head from "@/components/Head.astro";
 import Title from "@/components/Title.astro";
 
-export { Head, Description, Title };
+export { Description, Head, Title };
