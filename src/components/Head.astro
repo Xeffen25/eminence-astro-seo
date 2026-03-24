@@ -8,6 +8,7 @@ import Verification from "@/components/Verification.astro";
 import AppleWebApp from "@/components/AppleWebApp.astro";
 import Canonical from "@/components/Canonical.astro";
 import Alternate from "@/components/Alternate.astro";
+import AppLinks from "@/components/AppLinks.astro";
 import Base from "@/components/Base.astro";
 import Robots from "@/components/Robots.astro";
 import ThemeColor from "@/components/ThemeColor.astro";
@@ -24,6 +25,7 @@ export type Props = {
 	appleWebApp?: ComponentProps<typeof AppleWebApp>;
 	canonical?: ComponentProps<typeof Canonical>;
 	alternate?: ComponentProps<typeof Alternate>;
+	appLinks?: ComponentProps<typeof AppLinks>;
 	robots?: ComponentProps<typeof Robots>;
 	themeColor?: ComponentProps<typeof ThemeColor>["value"];
 	colorScheme?: ComponentProps<typeof ColorScheme>["value"];
@@ -40,6 +42,7 @@ const {
 	appleWebApp,
 	canonical,
 	alternate,
+	appLinks,
 	robots,
 	themeColor,
 	colorScheme,
@@ -58,6 +61,7 @@ const {
 	{appleWebApp && <AppleWebApp {...appleWebApp} />}
 	<Canonical {...canonical} />
 	{alternate && <Alternate {...alternate} />}
+	{appLinks && <AppLinks {...appLinks} />}
 	{robots && <Robots {...robots} />}
 	{themeColor && <ThemeColor value={themeColor} />}
 	{colorScheme && <ColorScheme value={colorScheme} />}
