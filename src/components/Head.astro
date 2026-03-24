@@ -13,6 +13,7 @@ import Archives from "@/components/Archives.astro";
 import Assets from "@/components/Assets.astro";
 import Bookmarks from "@/components/Bookmarks.astro";
 import Facebook from "@/components/Facebook.astro";
+import Pinterest from "@/components/Pinterest.astro";
 import Base from "@/components/Base.astro";
 import Robots from "@/components/Robots.astro";
 import ThemeColor from "@/components/ThemeColor.astro";
@@ -34,6 +35,7 @@ export type Props = {
 	assets?: ComponentProps<typeof Assets>["value"];
 	bookmarks?: ComponentProps<typeof Bookmarks>["value"];
 	facebook?: ComponentProps<typeof Facebook>;
+	pinterest?: ComponentProps<typeof Pinterest>["richPin"];
 	robots?: ComponentProps<typeof Robots>;
 	themeColor?: ComponentProps<typeof ThemeColor>["value"];
 	colorScheme?: ComponentProps<typeof ColorScheme>["value"];
@@ -55,6 +57,7 @@ const {
 	assets,
 	bookmarks,
 	facebook,
+	pinterest,
 	robots,
 	themeColor,
 	colorScheme,
@@ -78,6 +81,7 @@ const {
 	{assets && <Assets value={assets} />}
 	{bookmarks && <Bookmarks value={bookmarks} />}
 	{facebook && <Facebook {...facebook} />}
+	{pinterest !== undefined && <Pinterest richPin={pinterest} />}
 	{robots && <Robots {...robots} />}
 	{themeColor && <ThemeColor value={themeColor} />}
 	{colorScheme && <ColorScheme value={colorScheme} />}

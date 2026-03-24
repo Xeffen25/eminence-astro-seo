@@ -13,6 +13,7 @@ import Description from "@/components/Description.astro";
 import Facebook from "@/components/Facebook.astro";
 import Head from "@/components/Head.astro";
 import Manifest from "@/components/Manifest.astro";
+import Pinterest from "@/components/Pinterest.astro";
 import Robots from "@/components/Robots.astro";
 import ThemeColor from "@/components/ThemeColor.astro";
 import Title from "@/components/Title.astro";
@@ -32,6 +33,7 @@ export {
 	Facebook,
 	Head,
 	Manifest,
+	Pinterest,
 	Robots,
 	ThemeColor,
 	Title,

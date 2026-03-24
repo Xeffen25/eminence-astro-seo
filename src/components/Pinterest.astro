@@ -1,0 +1,17 @@
+---
+/**
+ * Pinterest component for managing Rich Pins.
+ *
+ * @typedef {Object} Props
+ * @property {boolean} [richPin=true] - Enable or disable Pinterest Rich Pins. Default is true.
+ */
+export type Props = {
+	richPin?: boolean;
+};
+
+const { richPin = true } = Astro.props;
+---
+
+<meta name="pinterest-rich-pin" content={richPin ? "true" : "false"} />
+---
+
