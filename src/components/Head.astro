@@ -6,6 +6,7 @@ import Description from "@/components/Description.astro";
 import Manifest from "@/components/Manifest.astro";
 import Verification from "@/components/Verification.astro";
 import AppleWebApp from "@/components/AppleWebApp.astro";
+import Canonical from "@/components/Canonical.astro";
 import Base from "@/components/Base.astro";
 import Robots from "@/components/Robots.astro";
 import ThemeColor from "@/components/ThemeColor.astro";
@@ -20,6 +21,7 @@ export type Props = {
 	manifest?: ComponentProps<typeof Manifest>["value"];
 	verification?: ComponentProps<typeof Verification>;
 	appleWebApp?: ComponentProps<typeof AppleWebApp>;
+	canonical?: ComponentProps<typeof Canonical>;
 	robots?: ComponentProps<typeof Robots>;
 	themeColor?: ComponentProps<typeof ThemeColor>["value"];
 	colorScheme?: ComponentProps<typeof ColorScheme>["value"];
@@ -34,6 +36,7 @@ const {
 	manifest,
 	verification,
 	appleWebApp,
+	canonical,
 	robots,
 	themeColor,
 	colorScheme,
@@ -50,6 +53,7 @@ const {
 	{manifest && <Manifest value={manifest} />}
 	{verification && <Verification {...verification} />}
 	{appleWebApp && <AppleWebApp {...appleWebApp} />}
+	<Canonical {...canonical} />
 	{robots && <Robots {...robots} />}
 	{themeColor && <ThemeColor value={themeColor} />}
 	{colorScheme && <ColorScheme value={colorScheme} />}
