@@ -6,6 +6,7 @@ import AppLinks from "@/components/AppLinks.astro";
 import Archives from "@/components/Archives.astro";
 import Assets from "@/components/Assets.astro";
 import Base from "@/components/Base.astro";
+import Bookmarks from "@/components/Bookmarks.astro";
 import Canonical from "@/components/Canonical.astro";
 import ColorScheme from "@/components/ColorScheme.astro";
 import Description from "@/components/Description.astro";
@@ -23,6 +24,7 @@ export {
 	Archives,
 	Assets,
 	Base,
+	Bookmarks,
 	Canonical,
 	ColorScheme,
 	Description,

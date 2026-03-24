@@ -11,6 +11,7 @@ import Alternate from "@/components/Alternate.astro";
 import AppLinks from "@/components/AppLinks.astro";
 import Archives from "@/components/Archives.astro";
 import Assets from "@/components/Assets.astro";
+import Bookmarks from "@/components/Bookmarks.astro";
 import Base from "@/components/Base.astro";
 import Robots from "@/components/Robots.astro";
 import ThemeColor from "@/components/ThemeColor.astro";
@@ -30,6 +31,7 @@ export type Props = {
 	appLinks?: ComponentProps<typeof AppLinks>;
 	archives?: ComponentProps<typeof Archives>["value"];
 	assets?: ComponentProps<typeof Assets>["value"];
+	bookmarks?: ComponentProps<typeof Bookmarks>["value"];
 	robots?: ComponentProps<typeof Robots>;
 	themeColor?: ComponentProps<typeof ThemeColor>["value"];
 	colorScheme?: ComponentProps<typeof ColorScheme>["value"];
@@ -49,6 +51,7 @@ const {
 	appLinks,
 	archives,
 	assets,
+	bookmarks,
 	robots,
 	themeColor,
 	colorScheme,
@@ -70,6 +73,7 @@ const {
 	{appLinks && <AppLinks {...appLinks} />}
 	{archives && <Archives value={archives} />}
 	{assets && <Assets value={assets} />}
+	{bookmarks && <Bookmarks value={bookmarks} />}
 	{robots && <Robots {...robots} />}
 	{themeColor && <ThemeColor value={themeColor} />}
 	{colorScheme && <ColorScheme value={colorScheme} />}

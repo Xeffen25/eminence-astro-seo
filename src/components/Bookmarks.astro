@@ -1,0 +1,9 @@
+---
+export type Props = {
+	value: (string | URL)[];
+};
+
+const { value } = Astro.props;
+---
+
+{value.map((href) => <link rel="bookmarks" href={typeof href === "string" ? href : href.toString()} />)}
