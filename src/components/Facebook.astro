@@ -1,0 +1,18 @@
+---
+type WithAppId = {
+	appId: string;
+	admins?: never;
+};
+
+type WithAdmins = {
+	admins: string | string[];
+	appId?: never;
+};
+
+export type Props = WithAppId | WithAdmins;
+
+const { appId, admins } = Astro.props;
+---
+
+{appId && <meta property="fb:app_id" content={appId} />}
+{admins && (Array.isArray(admins) ? admins : [admins]).map((id) => <meta property="fb:admins" content={id} />)}

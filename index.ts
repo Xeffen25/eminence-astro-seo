@@ -10,6 +10,7 @@ import Bookmarks from "@/components/Bookmarks.astro";
 import Canonical from "@/components/Canonical.astro";
 import ColorScheme from "@/components/ColorScheme.astro";
 import Description from "@/components/Description.astro";
+import Facebook from "@/components/Facebook.astro";
 import Head from "@/components/Head.astro";
 import Manifest from "@/components/Manifest.astro";
 import Robots from "@/components/Robots.astro";
@@ -28,6 +29,7 @@ export {
 	Canonical,
 	ColorScheme,
 	Description,
+	Facebook,
 	Head,
 	Manifest,
 	Robots,
