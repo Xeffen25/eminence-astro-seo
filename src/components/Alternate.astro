@@ -1,0 +1,22 @@
+---
+type HrefValue = string | URL;
+
+type FeedType = "application/rss+xml" | "application/atom+xml";
+
+export type Props = {
+	languages?: Record<string, HrefValue>;
+	types?: Partial<Record<FeedType, HrefValue>>;
+};
+
+const { languages, types } = Astro.props;
+
+const toHref = (value: HrefValue) => (typeof value === "string" ? value : value.toString());
+---
+
+{
+	Object.entries(languages ?? {}).map(([hreflang, href]) => (
+		<link rel="alternate" hreflang={hreflang} href={toHref(href)} />
+	))
+}
+
+{Object.entries(types ?? {}).map(([type, href]) => <link rel="alternate" type={type} href={toHref(href)} />)}
