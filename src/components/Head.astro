@@ -10,6 +10,7 @@ import Canonical from "@/components/Canonical.astro";
 import Alternate from "@/components/Alternate.astro";
 import AppLinks from "@/components/AppLinks.astro";
 import Archives from "@/components/Archives.astro";
+import Assets from "@/components/Assets.astro";
 import Base from "@/components/Base.astro";
 import Robots from "@/components/Robots.astro";
 import ThemeColor from "@/components/ThemeColor.astro";
@@ -28,6 +29,7 @@ export type Props = {
 	alternate?: ComponentProps<typeof Alternate>;
 	appLinks?: ComponentProps<typeof AppLinks>;
 	archives?: ComponentProps<typeof Archives>["value"];
+	assets?: ComponentProps<typeof Assets>["value"];
 	robots?: ComponentProps<typeof Robots>;
 	themeColor?: ComponentProps<typeof ThemeColor>["value"];
 	colorScheme?: ComponentProps<typeof ColorScheme>["value"];
@@ -46,6 +48,7 @@ const {
 	alternate,
 	appLinks,
 	archives,
+	assets,
 	robots,
 	themeColor,
 	colorScheme,
@@ -66,6 +69,7 @@ const {
 	{alternate && <Alternate {...alternate} />}
 	{appLinks && <AppLinks {...appLinks} />}
 	{archives && <Archives value={archives} />}
+	{assets && <Assets value={assets} />}
 	{robots && <Robots {...robots} />}
 	{themeColor && <ThemeColor value={themeColor} />}
 	{colorScheme && <ColorScheme value={colorScheme} />}
