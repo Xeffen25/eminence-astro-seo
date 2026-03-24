@@ -5,6 +5,13 @@
 	"plugins": ["prettier-plugin-organize-imports", "prettier-plugin-astro"],
 	"overrides": [
 		{
+			"files": "*.md",
+			"options": {
+				"parser": "markdown",
+				"plugins": []
+			}
+		},
+		{
 			"files": "*.astro",
 			"options": {
 				"parser": "astro"
