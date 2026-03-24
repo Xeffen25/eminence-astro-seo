@@ -1,8 +1,9 @@
 // Do not write code directly here, instead use the `src` folder!
 // Then, use this file to export everything you want your user to access.
 import Alternate from "@/components/Alternate.astro";
-import AppLinks from "@/components/AppLinks.astro";
 import AppleWebApp from "@/components/AppleWebApp.astro";
+import AppLinks from "@/components/AppLinks.astro";
+import Archives from "@/components/Archives.astro";
 import Base from "@/components/Base.astro";
 import Canonical from "@/components/Canonical.astro";
 import ColorScheme from "@/components/ColorScheme.astro";
@@ -18,6 +19,7 @@ export {
 	Alternate,
 	AppLinks,
 	AppleWebApp,
+	Archives,
 	Base,
 	Canonical,
 	ColorScheme,
