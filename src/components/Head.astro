@@ -24,7 +24,7 @@ export type Props = {
 	manifest?: ComponentProps<typeof Manifest>["value"];
 	verification?: ComponentProps<typeof Verification>;
 	appleWebApp?: ComponentProps<typeof AppleWebApp>;
-	canonical?: ComponentProps<typeof Canonical>;
+	canonical?: ComponentProps<typeof Canonical>["href"];
 	alternate?: ComponentProps<typeof Alternate>;
 	appLinks?: ComponentProps<typeof AppLinks>;
 	archives?: ComponentProps<typeof Archives>["value"];
@@ -62,7 +62,7 @@ const {
 	{manifest && <Manifest value={manifest} />}
 	{verification && <Verification {...verification} />}
 	{appleWebApp && <AppleWebApp {...appleWebApp} />}
-	<Canonical {...canonical} />
+	<Canonical href={canonical} />
 	{alternate && <Alternate {...alternate} />}
 	{appLinks && <AppLinks {...appLinks} />}
 	{archives && <Archives value={archives} />}
