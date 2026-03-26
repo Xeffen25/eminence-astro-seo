@@ -3,14 +3,18 @@
 	"version": "0.0.1",
 	"type": "module",
 	"exports": {
-		".": "./index.ts"
+		"./components": "./src/components/index.ts",
+		"./integration": "./src/integration/index.ts"
 	},
 	"files": [
-		"src",
-		"index.ts"
+		"src"
 	],
 	"keywords": [
-		"astro-component"
+		"astro-component",
+		"astro-integration",
+		"withastro",
+		"seo",
+		"tooling"
 	],
 	"scripts": {
 		"format:check": "prettier . --check",

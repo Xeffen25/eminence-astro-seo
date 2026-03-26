@@ -19,7 +19,7 @@ Use `Head` in your page or layout and pass the metadata you need.
 
 ```astro
 ---
-import { Head } from "eminence-astro-seo";
+import { Head } from "eminence-astro-seo/components";
 ---
 
 <html lang="en">
@@ -71,7 +71,7 @@ import { Head } from "eminence-astro-seo";
 
 ```astro
 ---
-import { Head } from "eminence-astro-seo";
+import { Head } from "eminence-astro-seo/components";
 ---
 
 <Head title={{ value: "Docs" }}>
@@ -90,7 +90,7 @@ You can also import and render leaf components directly:
 
 ```astro
 ---
-import { Canonical, Description, Facebook, Robots, Title } from "eminence-astro-seo";
+import { Canonical, Description, Facebook, Robots, Title } from "eminence-astro-seo/components";
 ---
 
 <head>
@@ -100,6 +100,14 @@ import { Canonical, Description, Facebook, Robots, Title } from "eminence-astro-
 	<Facebook title="Article" description="Long-form article" type="article" />
 	<Robots index={true} follow={true} />
 </head>
+```
+
+## Integration
+
+Import the integration from the dedicated integration subpath:
+
+```ts
+import { eminenceAstroSeo } from "eminence-astro-seo/integration";
 ```
 
 ## Custom Metadata

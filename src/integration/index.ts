@@ -1,7 +1,7 @@
 import type { AstroConfig, AstroIntegration } from "astro";
 
-import type { RobotsTxtOptions } from "@/integration/generators/robots-txt";
-import { generateRobotsTxt } from "@/integration/generators/robots-txt";
+import type { RobotsTxtOptions } from "./generators/robots-txt";
+import { generateRobotsTxt } from "./generators/robots-txt";
 
 export type IntegrationOptionsInput = {
 	robotsTxt?: boolean | RobotsTxtOptions;

@@ -1,7 +1,7 @@
-import type { IntegrationRuntimeContext } from "@/integration/index";
 import { writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
+import type { IntegrationRuntimeContext } from "../index";
 
 /**
  * Well-known crawler user-agent identifiers.
