@@ -18,11 +18,13 @@ import Robots from "@/components/Robots.astro";
 import ThemeColor from "@/components/ThemeColor.astro";
 import Title from "@/components/Title.astro";
 import Verification from "@/components/Verification.astro";
+import type { IntegrationOptionsInput } from "@/integration/index";
+import createIntegration from "@/integration/index";
 
 export {
 	Alternate,
-	AppLinks,
 	AppleWebApp,
+	AppLinks,
 	Archives,
 	Assets,
 	Base,
@@ -30,6 +32,7 @@ export {
 	Canonical,
 	ColorScheme,
 	Description,
+	createIntegration as eminenceAstroSeo,
 	Facebook,
 	Head,
 	Manifest,
@@ -39,3 +42,5 @@ export {
 	Title,
 	Verification,
 };
+
+export type EminenceAstroSeoOptions = IntegrationOptionsInput;
