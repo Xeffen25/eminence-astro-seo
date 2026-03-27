@@ -10,12 +10,12 @@ import type { IntegrationRuntimeContext } from "../../../src/integration/index";
 describe("generateSecurityTxt", () => {
 	let outputDir: string;
 	let outDirUrl: URL;
-	let logger: { error: ReturnType<typeof vi.fn> };
+	let logger: { error: ReturnType<typeof vi.fn>; warn: ReturnType<typeof vi.fn>; info: ReturnType<typeof vi.fn> };
 
 	beforeEach(async () => {
 		outputDir = join(tmpdir(), `eminence-security-${Date.now()}-${Math.random().toString(16).slice(2)}`);
 		outDirUrl = pathToFileURL(outputDir + "/");
-		logger = { error: vi.fn() };
+		logger = { error: vi.fn(), warn: vi.fn(), info: vi.fn() };
 
 		await mkdir(outputDir, { recursive: true });
 	});
@@ -60,6 +60,9 @@ describe("generateSecurityTxt", () => {
 		expect(result).toContain("Policy: https://example.com/security-policy.html");
 		expect(result).toContain("Hiring: https://example.com/jobs.html");
 		expect(result).toContain("CSAF: https://example.com/.well-known/csaf/provider-metadata.json");
+		expect(logger.info).toHaveBeenCalledWith(
+			'Generated ".well-known/security.txt" at route "/.well-known/security.txt".',
+		);
 	});
 
 	it("supports Expires presets and normalizes to ISO 8601", async () => {
@@ -89,21 +92,61 @@ describe("generateSecurityTxt", () => {
 		expect(result).toContain("Expires: 2030-01-01T00:00:00.000Z");
 	});
 
-	it("throws and logs when security.txt already exists", async () => {
+	it("warns and disables generation when security.txt already exists", async () => {
+		await mkdir(join(outputDir, ".well-known"), { recursive: true });
+		await writeFile(join(outputDir, ".well-known", "security.txt"), "existing", "utf-8");
+		const context = createContext({
+			contact: "mailto:test@test.com",
+			expires: "1 year",
+		});
+
+		await expect(generateSecurityTxt(context)).resolves.toBeUndefined();
+		expect(context.options.securityTxt).toBe(false);
+
+		expect(logger.warn).toHaveBeenCalledWith(
+			'Could not generate ".well-known/security.txt" because it already exists. Disabling securityTxt generation for this build.',
+		);
+	});
+
+	it("logs info when securityTxt is false and file already exists", async () => {
 		await mkdir(join(outputDir, ".well-known"), { recursive: true });
 		await writeFile(join(outputDir, ".well-known", "security.txt"), "existing", "utf-8");
 
+		await generateSecurityTxt(createContext(false));
+
+		expect(logger.info).toHaveBeenCalledWith(
+			'No ".well-known/security.txt" file was generated nor modified because it already exists.',
+		);
+	});
+
+	it("logs info when securityTxt is false and no file exists", async () => {
+		await generateSecurityTxt(createContext(false));
+
+		expect(logger.info).toHaveBeenCalledWith(
+			'No ".well-known/security.txt" file exists and no file was generated.',
+		);
+	});
+
+	it("warns with recommendation when securityTxt is undefined", async () => {
+		await generateSecurityTxt(createContext(undefined));
+
+		expect(logger.warn).toHaveBeenCalledWith(
+			"No security.txt file was generated because securityTxt is undefined. Recommendation: follow todo.com/later-create-article to learn why adding a basic security.txt is important.",
+		);
+	});
+
+	it("logs an error before throwing when generation fails", async () => {
 		await expect(
 			generateSecurityTxt(
 				createContext({
-					contact: "mailto:test@test.com",
+					contact: "test@test.com",
 					expires: "1 year",
 				}),
 			),
-		).rejects.toThrow('Output file already exists: ".well-known/security.txt".');
+		).rejects.toThrow("Invalid Contact value");
 
 		expect(logger.error).toHaveBeenCalledWith(
-			'Cannot generate ".well-known/security.txt" because it already exists in the build output directory.',
+			'Failed to generate ".well-known/security.txt": Invalid Contact value "test@test.com": expected a valid absolute URL.',
 		);
 	});
 

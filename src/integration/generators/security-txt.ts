@@ -18,6 +18,11 @@ export type SecurityTxtOptions = {
 	csaf?: string | string[];
 };
 
+const SECURITY_TXT_RECOMMENDATION =
+	"Recommendation: follow todo.com/later-create-article to learn why adding a basic security.txt is important.";
+
+const SECURITY_TXT_RELATIVE_PATH = ".well-known/security.txt";
+
 const toArray = <T>(value: T | T[] | undefined): T[] => {
 	if (value === undefined) {
 		return [];
@@ -141,10 +146,40 @@ const buildSecurityTxt = (options: SecurityTxtOptions, now: Date = new Date()): 
 	return `${lines.join("\n")}\n`;
 };
 
+const exists = async (path: string): Promise<boolean> => {
+	try {
+		await access(path, constants.F_OK);
+		return true;
+	} catch (error) {
+		if (error && typeof error === "object" && "code" in error && error.code === "ENOENT") {
+			return false;
+		}
+
+		throw error;
+	}
+};
+
 export async function generateSecurityTxt({ outDir, options, logger }: IntegrationRuntimeContext): Promise<void> {
 	const input = options.securityTxt;
+	const outputPath = join(fileURLToPath(outDir), ".well-known", "security.txt");
+	const outputExists = await exists(outputPath);
 
-	if (input === undefined || input === false) {
+	if (input === false) {
+		if (outputExists) {
+			logger.info(
+				`No "${SECURITY_TXT_RELATIVE_PATH}" file was generated nor modified because it already exists.`,
+			);
+		} else {
+			logger.info(`No "${SECURITY_TXT_RELATIVE_PATH}" file exists and no file was generated.`);
+		}
+
+		return;
+	}
+
+	if (input === undefined) {
+		logger.warn(
+			`No security.txt file was generated because securityTxt is undefined. ${SECURITY_TXT_RECOMMENDATION}`,
+		);
 		return;
 	}
 
@@ -153,22 +188,22 @@ export async function generateSecurityTxt({ outDir, options, logger }: Integrati
 		throw new Error("Invalid securityTxt configuration: expected an object.");
 	}
 
-	const outputPath = join(fileURLToPath(outDir), ".well-known", "security.txt");
-
-	try {
-		await access(outputPath, constants.F_OK);
-		logger.error(
-			'Cannot generate ".well-known/security.txt" because it already exists in the build output directory.',
+	if (outputExists) {
+		logger.warn(
+			`Could not generate "${SECURITY_TXT_RELATIVE_PATH}" because it already exists. Disabling securityTxt generation for this build.`,
 		);
-		throw new Error('Output file already exists: ".well-known/security.txt".');
-	} catch (error) {
-		if (!(error && typeof error === "object" && "code" in error && error.code === "ENOENT")) {
-			throw error;
-		}
+		options.securityTxt = false;
+		return;
 	}
 
-	const content = buildSecurityTxt(input);
-
-	await mkdir(dirname(outputPath), { recursive: true });
-	await writeFile(outputPath, content, "utf-8");
+	try {
+		const content = buildSecurityTxt(input);
+		await mkdir(dirname(outputPath), { recursive: true });
+		await writeFile(outputPath, content, "utf-8");
+		logger.info(`Generated "/${SECURITY_TXT_RELATIVE_PATH}"`);
+	} catch (error) {
+		const message = error instanceof Error ? error.message : String(error);
+		logger.error(`Failed to generate "/${SECURITY_TXT_RELATIVE_PATH}": ${message}`);
+		throw error;
+	}
 }
