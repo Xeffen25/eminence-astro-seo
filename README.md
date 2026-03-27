@@ -110,6 +110,40 @@ Import the integration from the dedicated integration subpath:
 import { eminenceAstroSeo } from "eminence-astro-seo/integration";
 ```
 
+### `securityTxt`
+
+Use `securityTxt` to generate `.well-known/security.txt` during build.
+
+```ts
+import { defineConfig } from "astro/config";
+import { eminenceAstroSeo } from "eminence-astro-seo/integration";
+
+export default defineConfig({
+	integrations: [
+		eminenceAstroSeo({
+			securityTxt: {
+				contact: "mailto:test@test.com",
+				expires: "1 year",
+				encryption: "https://example.com/pgp-key.txt",
+				acknowledgments: "https://example.com/hall-of-fame.html",
+				preferredLanguages: ["en", "es", "ru"],
+				canonical: "https://example.com/.well-known/security.txt",
+				policy: "https://example.com/security-policy.html",
+				hiring: "https://example.com/jobs.html",
+				csaf: "https://example.com/.well-known/csaf/provider-metadata.json",
+			},
+		}),
+	],
+});
+```
+
+`securityTxt` requires:
+
+- `contact`: `mailto:` or `https://` value(s)
+- `expires`: ISO 8601 string, `Date`, or one of: `"1 week"`, `"1 month"`, `"1 year"`, `"10 years"`, `"100 years"`
+
+If `.well-known/security.txt` already exists in the build output, the integration logs an Astro error and stops generation.
+
 ## Custom Metadata
 
 This package is intentionally opinionated and focuses on up-to-date, relevant SEO metadata. For this reason, there are no dedicated options for browserconfig.xml and other outdated tags.
