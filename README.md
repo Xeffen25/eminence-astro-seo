@@ -140,7 +140,7 @@ export default defineConfig({
 `securityTxt` requires:
 
 - `contact`: `mailto:` or `https://` value(s)
-- `expires`: ISO 8601 string, `Date`, or one of: `"1 week"`, `"1 month"`, `"1 year"`, `"10 years"`, `"100 years"`
+- `expires`: ISO 8601 string, `Date`, or a duration like `"30 days"`, `"6 months"`, or `"1 years"`
 
 If `.well-known/security.txt` already exists in the build output, the integration logs an Astro error and stops generation.
 

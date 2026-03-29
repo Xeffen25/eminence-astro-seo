@@ -4,11 +4,13 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { IntegrationRuntimeContext } from "../index";
 
-export type SecurityTxtExpiresPreset = "1 week" | "1 month" | "1 year" | "10 years" | "100 years";
+export type SecurityTxtExpiresUnit = "day" | "days" | "month" | "months" | "year" | "years";
+
+export type SecurityTxtExpiresDuration = `${number} ${SecurityTxtExpiresUnit}`;
 
 export type SecurityTxtOptions = {
 	contact: string | string[];
-	expires: Date | string | SecurityTxtExpiresPreset;
+	expires: Date | string | SecurityTxtExpiresDuration;
 	encryption?: string | string[];
 	acknowledgments?: string | string[];
 	preferredLanguages?: string | string[];
@@ -18,10 +20,10 @@ export type SecurityTxtOptions = {
 	csaf?: string | string[];
 };
 
-const SECURITY_TXT_RECOMMENDATION =
+export const SECURITY_TXT_RECOMMENDATION =
 	"Recommendation: follow todo.com/later-create-article to learn why adding a basic security.txt is important.";
 
-const SECURITY_TXT_RELATIVE_PATH = ".well-known/security.txt";
+export const SECURITY_TXT_RELATIVE_PATH = "/.well-known/security.txt";
 
 const toArray = <T>(value: T | T[] | undefined): T[] => {
 	if (value === undefined) {
@@ -55,26 +57,42 @@ const assertContact = (value: string): string => {
 	return assertHttpsUrl(value, "Contact");
 };
 
-const addPreset = (now: Date, preset: SecurityTxtExpiresPreset): Date => {
+const EXPIRES_DURATION_PATTERN = /^(\d+)\s+(day|days|month|months|year|years)$/i;
+
+const addDuration = (now: Date, amount: number, unit: SecurityTxtExpiresUnit): Date => {
 	const result = new Date(now.getTime());
 
-	switch (preset) {
-		case "1 week":
-			result.setUTCDate(result.getUTCDate() + 7);
+	switch (unit) {
+		case "day":
+		case "days":
+			result.setUTCDate(result.getUTCDate() + amount);
 			return result;
-		case "1 month":
-			result.setUTCMonth(result.getUTCMonth() + 1);
+		case "month":
+		case "months":
+			result.setUTCMonth(result.getUTCMonth() + amount);
 			return result;
-		case "1 year":
-			result.setUTCFullYear(result.getUTCFullYear() + 1);
-			return result;
-		case "10 years":
-			result.setUTCFullYear(result.getUTCFullYear() + 10);
-			return result;
-		case "100 years":
-			result.setUTCFullYear(result.getUTCFullYear() + 100);
+		case "year":
+		case "years":
+			result.setUTCFullYear(result.getUTCFullYear() + amount);
 			return result;
 	}
+};
+
+const parseExpiresDuration = (value: string): { amount: number; unit: SecurityTxtExpiresUnit } | undefined => {
+	const match = value.match(EXPIRES_DURATION_PATTERN);
+	if (!match) {
+		return undefined;
+	}
+
+	const amount = Number.parseInt(match[1], 10);
+	if (!Number.isSafeInteger(amount) || amount < 1) {
+		throw new Error(`Invalid Expires value \"${value}\": duration amount must be a positive integer.`);
+	}
+
+	return {
+		amount,
+		unit: match[2].toLowerCase() as SecurityTxtExpiresUnit,
+	};
 };
 
 const normalizeExpires = (value: SecurityTxtOptions["expires"], now: Date = new Date()): string => {
@@ -86,15 +104,15 @@ const normalizeExpires = (value: SecurityTxtOptions["expires"], now: Date = new 
 		return value.toISOString();
 	}
 
-	const presets: SecurityTxtExpiresPreset[] = ["1 week", "1 month", "1 year", "10 years", "100 years"];
-	if (presets.includes(value as SecurityTxtExpiresPreset)) {
-		return addPreset(now, value as SecurityTxtExpiresPreset).toISOString();
+	const duration = parseExpiresDuration(value);
+	if (duration) {
+		return addDuration(now, duration.amount, duration.unit).toISOString();
 	}
 
 	const parsed = new Date(value);
 	if (Number.isNaN(parsed.getTime())) {
 		throw new Error(
-			`Invalid Expires value \"${value}\": expected an ISO 8601 date string, Date object, or one of ${presets.join(", ")}.`,
+			`Invalid Expires value \"${value}\": expected an ISO 8601 date string, Date object, or a duration like \"30 days\", \"6 months\", or \"1 year\".`,
 		);
 	}
 
@@ -200,10 +218,10 @@ export async function generateSecurityTxt({ outDir, options, logger }: Integrati
 		const content = buildSecurityTxt(input);
 		await mkdir(dirname(outputPath), { recursive: true });
 		await writeFile(outputPath, content, "utf-8");
-		logger.info(`Generated "/${SECURITY_TXT_RELATIVE_PATH}"`);
+		logger.info(`Generated "${SECURITY_TXT_RELATIVE_PATH}"`);
 	} catch (error) {
 		const message = error instanceof Error ? error.message : String(error);
-		logger.error(`Failed to generate "/${SECURITY_TXT_RELATIVE_PATH}": ${message}`);
+		logger.error(`Failed to generate "${SECURITY_TXT_RELATIVE_PATH}": ${message}`);
 		throw error;
 	}
 }
