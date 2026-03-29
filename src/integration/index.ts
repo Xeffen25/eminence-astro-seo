@@ -10,8 +10,6 @@ export type IntegrationOptionsInput = {
 	securityTxt?: false | SecurityTxtOptions;
 };
 
-export type IntegrationInputOptions = IntegrationOptionsInput;
-
 export type IntegrationRuntimeContext = {
 	config: AstroConfig;
 	outDir: URL;
